@@ -1,5 +1,9 @@
 <script setup>
-const page = "xxx";
+const route = useRoute();
+const event = useRequestEvent();
+console.log(event);
+setResponseStatus(event, 400);
+const page = route.fullPath;
 </script>
 
 <template>
