@@ -13,6 +13,34 @@ const userRegisteObject = ref({
     detail: "",
   },
 });
+
+const signUp = async (requsetBody) => {
+  try {
+    const data = await $fetch("/api/v1/user/signup", {
+      method: "POST",
+      baseURL: "https://nuxr3.zeabur.app",
+      body: { ...requsetBody },
+    });
+    console.log(data);
+    await $swal.fire({
+      position: "center",
+      icon: "success",
+      title: "註冊成功",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  } catch (error) {
+    // console.log(error.response);
+    const { message } = error.response._data;
+    await $swal.fire({
+      position: "center",
+      icon: "error",
+      title: message,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
+};
 // 使用 sweetAlert2 套件顯示訊息
 // $swal.fire({
 //   position: "center",
@@ -30,9 +58,10 @@ const userRegisteObject = ref({
         <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">
           <div class="bg-white p-4 p-md-5 rounded shadow-sm">
             <h2 class="h3 mb-4">會員註冊</h2>
-            <form @submit.prevent="">
+            <form @submit.prevent="signUp(userRegisteObject)">
               <div class="form-floating mb-4">
                 <input
+                  v-model="userRegisteObject.name"
                   type="text"
                   class="form-control"
                   id="firstName"
@@ -46,6 +75,7 @@ const userRegisteObject = ref({
 
               <div class="form-floating mb-4">
                 <input
+                  v-model="userRegisteObject.email"
                   type="email"
                   class="form-control"
                   id="email"
@@ -60,6 +90,7 @@ const userRegisteObject = ref({
 
               <div class="form-floating mb-4">
                 <input
+                  v-model="userRegisteObject.password"
                   type="password"
                   class="form-control"
                   id="password"
@@ -74,6 +105,7 @@ const userRegisteObject = ref({
 
               <div class="form-floating mb-4">
                 <input
+                  v-model="userRegisteObject.phone"
                   type="tel"
                   class="form-control"
                   id="phone"
@@ -86,6 +118,7 @@ const userRegisteObject = ref({
 
               <div class="form-floating mb-4">
                 <input
+                  v-model="userRegisteObject.birthday"
                   type="date"
                   class="form-control"
                   id="dateInput"
@@ -98,6 +131,7 @@ const userRegisteObject = ref({
                 <div class="col-md-6">
                   <div class="form-floating mb-4">
                     <input
+                      v-model="userRegisteObject.address.zipcode"
                       type="text"
                       class="form-control"
                       id="zipcode"
@@ -111,6 +145,7 @@ const userRegisteObject = ref({
                 <div class="col-md-6">
                   <div class="form-floating mb-4">
                     <input
+                      v-model="userRegisteObject.address.detail"
                       type="text"
                       class="form-control"
                       id="address"
