@@ -11,21 +11,24 @@ const room = ref({});
 
 const apiUrl = `https://nuxr3.zeabur.app/api/v1/rooms/${id}`;
 
-fetch(apiUrl)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error("取得房型資料失敗");
-    }
-    return response.json();
-  })
-  .then((data) => {
-    const { result } = data;
-    console.log(result);
-    room.value = result;
-  })
-  .catch((error) => {
-    console.error("發生錯誤:", error);
-  });
+const { data } = await useFetch(apiUrl);
+room.value = data.value.result;
+
+// fetch(apiUrl)
+//   .then((response) => {
+//     if (!response.ok) {
+//       throw new Error("取得房型資料失敗");
+//     }
+//     return response.json();
+//   })
+//   .then((data) => {
+//     const { result } = data;
+//     console.log(result);
+//     room.value = result;
+//   })
+//   .catch((error) => {
+//     console.error("發生錯誤:", error);
+//   });
 </script>
 
 <template>
