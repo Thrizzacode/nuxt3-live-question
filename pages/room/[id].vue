@@ -17,7 +17,21 @@ const { data: roomObject } = await useFetch(`/rooms/${id}`, {
   },
 });
 
+console.log(roomObject.value);
 // 使用 useSeoMeta  將 roomObject 的資訊寫入 SEO Meta
+useSeoMeta({
+  title: roomObject.value.name,
+  titleTemplate: (title) => `Freyja | ${title}`,
+  description: () => roomObject.value.description,
+  ogTitle: () => `Freyja | ${roomObject.value.name}`,
+  ogDescription: () => roomObject.value.description,
+  ogImage: () => roomObject.value.imageUrl,
+  ogUrl: () => `https://freyja.travel.com.tw/room/${roomObject.value.id}`,
+  twitterCard: "summary_large_image",
+  twitterTitle: () => `Freyja | ${roomObject.value.name}`,
+  twitterDescription: () => roomObject.value.description,
+  twitterImage: () => roomObject.value.imageUrl,
+});
 /* 請撰寫 useSeoMeta({ }) 渲染出下方的 HTML 結構，並將 {{ }}  改成使用 roomObject 物件的資料。
 <title> Freyja | {{ 房型名稱 }}</title>
 <meta name="description" content="{{ 房型描述 }}">
