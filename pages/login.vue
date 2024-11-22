@@ -4,6 +4,7 @@ const userLoginObject = ref({
   email: "",
   password: "",
 });
+const router = useRouter();
 
 const loginAccount = async (requsetBody) => {
   try {
@@ -27,7 +28,7 @@ const loginAccount = async (requsetBody) => {
       showConfirmButton: false,
       timer: 1500,
     });
-
+    router.push("/orders");
   } catch (error) {
     const { message } = error.response._data;
     $swal.fire({
