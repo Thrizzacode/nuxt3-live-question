@@ -1,12 +1,15 @@
 <script setup>
+const { $offcanvas, $modal } = useNuxtApp();
 // modal
 const modalRef = ref(null);
 let modal;
 const showModal = () => {
   // 開啟 modal
+  modal.show();
 };
 const closeModal = () => {
   // 關閉 modal
+  modal.hide();
 };
 
 // offcanvas
@@ -15,19 +18,27 @@ const offcanvasRef = ref(null);
 let offcanvas;
 const showOffcanvas = () => {
   // 開啟 offcanvas
+  offcanvas.show();
 };
 const closeOffcanvas = () => {
   // 關閉 offcanvas
+  offcanvas.hide();
 };
 
 onMounted(() => {
   // 初始化 modal 與 offcanvas 元件
+  console.log($offcanvas, $modal);
+  offcanvas = $offcanvas(offcanvasRef.value, { keyboard: false });
+  modal = $modal(modalRef.value, {});
+  console.log(offcanvas, modal);
 });
 </script>
 
 <template>
   <div class="container mb-5">
-    <button type="button" class="btn btn-primary" @click="">開啟 Modal</button>
+    <button type="button" class="btn btn-primary" @click="showModal">
+      開啟 Modal
+    </button>
   </div>
   <!-- modal 元件 -->
   <div
@@ -36,7 +47,7 @@ onMounted(() => {
     tabindex="-1"
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
-    ref=""
+    ref="modalRef"
   >
     <div class="modal-dialog">
       <div class="modal-content">
@@ -46,12 +57,12 @@ onMounted(() => {
             type="button"
             class="btn-close"
             aria-label="Close"
-            @click=""
+            @click="closeModal"
           ></button>
         </div>
         <div class="modal-body">...</div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" @click="">
+          <button type="button" class="btn btn-secondary" @click="closeModal">
             Close
           </button>
           <button type="button" class="btn btn-primary">Understood</button>
@@ -61,7 +72,7 @@ onMounted(() => {
   </div>
 
   <div class="container">
-    <button type="button" class="btn btn-secondary" @click="">
+    <button type="button" class="btn btn-secondary" @click="showOffcanvas">
       開啟 Offcanvas
     </button>
   </div>
@@ -71,7 +82,7 @@ onMounted(() => {
     tabindex="-1"
     id="offcanvasBottom"
     aria-labelledby="offcanvasBottomLabel"
-    ref=""
+    ref="offcanvasRef"
   >
     <div class="offcanvas-header">
       <h3 class="offcanvas-title" id="offcanvasBottomLabel">
@@ -81,7 +92,7 @@ onMounted(() => {
         type="button"
         class="btn-close"
         aria-label="Close"
-        @click=""
+        @click="closeOffcanvas"
       ></button>
     </div>
     <div class="offcanvas-body small">
