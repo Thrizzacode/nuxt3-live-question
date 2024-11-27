@@ -1,8 +1,10 @@
 <script setup>
+const { $useLoading } = useNuxtApp();
+
 function openLoading() {
-  // 開啟讀取效果
+  const load = $useLoading().show();
   setTimeout(() => {
-    // 關閉讀取效果
+    load.hide();
   }, 1000);
 }
 </script>
